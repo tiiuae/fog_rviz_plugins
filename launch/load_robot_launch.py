@@ -65,7 +65,7 @@ def generate_launch_description():
     this_package_path = get_package_share_directory('fog_rviz_plugins')
     xml_path = os.path.join(
         this_package_path,
-        'data', 't650.xml'
+        'data', 'x500.xml'
     )
     robot_desc = load_model(xml_path, base_frame, this_package_path)
     

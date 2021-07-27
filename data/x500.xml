@@ -1,4 +1,4 @@
-<robot name="t650_visualization">
+<robot name="x500_visualization">
   <material name="UAVSpecificColor">
     <color rgba="[REPLACEME]uav_color[/REPLACEME]"/>
   </material>
@@ -16,16 +16,9 @@
   <link name="[REPLACEME]uav_name[/REPLACEME]">
     <!-- TOP AND BOTTOM -->
     <visual>
-      <origin xyz="0 0 15e-3" rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/t650.stl" scale="1e-3 1e-3 1e-3" />
-      </geometry>
-      <material name="Gray" />
-    </visual>
-    <visual>
-      <origin xyz="0 0 -15e-3" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/t650.stl" scale="1e-3 1e-3 1e-3" />
+        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/x500_body.stl" scale="1 1 1" />
       </geometry>
       <material name="Gray" />
     </visual>
@@ -34,9 +27,9 @@
   <link name="[REPLACEME]uav_name[/REPLACEME]/uav_marker">
     <!-- UAV specific-color marker -->
     <visual>
-      <origin xyz="0 0 -90e-3" rpy="0 0 0" />
+      <origin xyz="0 0 -60e-3" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="530e-3" length="250e-3" />
+        <cylinder radius="400e-3" length="300e-3" />
       </geometry>
       <material name="UAVSpecificColor" />
     </visual>
@@ -50,30 +43,30 @@
   <link name="[REPLACEME]uav_name[/REPLACEME]/props">
     <!-- Prop -->
     <visual>
-      <origin xyz="234e-3 234e-3 30e-3" rpy="0 0 0" />
+      <origin xyz="177e-3 177e-3 21e-3" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="190e-3" length="10e-3" />
+        <cylinder radius="127e-3" length="10e-3" />
       </geometry>
       <material name="PinkTransparent" />
     </visual>
     <visual>
-      <origin xyz="-234e-3 234e-3 30e-3" rpy="0 0 0" />
+      <origin xyz="-177e-3 177e-3 21e-3" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="190e-3" length="10e-3" />
+        <cylinder radius="127e-3" length="10e-3" />
       </geometry>
       <material name="PinkTransparent" />
     </visual>
     <visual>
-      <origin xyz="234e-3 -234e-3 30e-3" rpy="0 0 0" />
+      <origin xyz="177e-3 -177e-3 21e-3" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="190e-3" length="10e-3" />
+        <cylinder radius="127e-3" length="10e-3" />
       </geometry>
       <material name="PinkTransparent" />
     </visual>
     <visual>
-      <origin xyz="-234e-3 -234e-3 30e-3" rpy="0 0 0" />
+      <origin xyz="-177e-3 -177e-3 21e-3" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="190e-3" length="10e-3" />
+        <cylinder radius="127e-3" length="10e-3" />
       </geometry>
       <material name="PinkTransparent" />
     </visual>
@@ -88,33 +81,33 @@
     <!-- ARMS -->
     <!-- arm1 -->
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 78e-2" />
+      <origin xyz="0 0 0" rpy="0 0 0e-2" />
       <geometry>
-        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/tarot_arm.stl" scale="1e-3 1e-3 1e-3" />
+        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/x500_arm.stl" scale="1 1 1" />
       </geometry>
       <material name="Gray" />
     </visual>
     <!-- arm2 -->
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 -78e-2" />
+      <origin xyz="0 0 0" rpy="0 0 157e-2" />
       <geometry>
-        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/tarot_arm.stl" scale="1e-3 1e-3 1e-3" />
+        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/x500_arm.stl" scale="1 1 1" />
       </geometry>
       <material name="Gray" />
     </visual>
     <!-- arm3 -->
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 -235e-2" />
+      <origin xyz="0 0 0" rpy="0 0 317e-2" />
       <geometry>
-        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/tarot_arm.stl" scale="1e-3 1e-3 1e-3" />
+        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/x500_arm.stl" scale="1 1 1" />
       </geometry>
       <material name="Red" />
     </visual>
     <!-- arm4 -->
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 235e-2" />
+      <origin xyz="0 0 0" rpy="0 0 471e-2" />
       <geometry>
-        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/tarot_arm.stl" scale="1e-3 1e-3 1e-3" />
+        <mesh filename="file://[REPLACEME]path[/REPLACEME]/data/x500_arm.stl" scale="1 1 1" />
       </geometry>
       <material name="Red" />
     </visual>
