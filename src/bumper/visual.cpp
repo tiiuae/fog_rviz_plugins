@@ -80,11 +80,11 @@ namespace fog_rviz_plugins
       constexpr float arc_a_start = M_PI;
       constexpr float arc_a_end = arc_a_start + 3.0 / 2.0 * M_PI;
       ret->addPoint(cove({0.0, 0.0, 0.0}, v, u));
-      ret->addPoint(cove({Ogre::Real(cos(yaw) * base_len), Ogre::Real(sin(yaw) * base_len), 0.0}, v, u));
+      ret->addPoint(cove({cos(yaw) * base_len, sin(yaw) * base_len, 0.0}, v, u));
       for (int it = 0; it < arc_pts; it++)
       {
         const float angle = yaw + arc_a_start + (arc_a_end - arc_a_start) / arc_pts * it;
-        ret->addPoint(cove({Ogre::Real(cos(yaw) * (base_len + arc_r) + cos(angle) * arc_r), Ogre::Real(sin(yaw) * (base_len + arc_r) + sin(angle) * arc_r), 0.0}, v, u));
+        ret->addPoint(cove({cos(yaw) * (base_len + arc_r) + cos(angle) * arc_r, sin(yaw) * (base_len + arc_r) + sin(angle) * arc_r, 0.0}, v, u));
       }
       return ret;
     }
@@ -92,7 +92,7 @@ namespace fog_rviz_plugins
 
     /* draw_sector() method //{ */
     std::shared_ptr<rviz_rendering::Object> Visual::draw_sector(const double dist, const double vfov, const double hfov, const unsigned sector_it,
-                                                      const unsigned n_horizontal_sectors)
+                                                                const unsigned n_horizontal_sectors)
     {
       std::shared_ptr<rviz_rendering::Object> ret = nullptr;
       if (sector_it < n_horizontal_sectors)
@@ -115,8 +115,7 @@ namespace fog_rviz_plugins
     {
       std::shared_ptr<rviz_rendering::MeshShape> mesh_ptr = std::make_shared<rviz_rendering::MeshShape>(scene_manager_, frame_node_);
 
-      Ogre::Vector3 pts[] = {Ogre::Vector3(0, 0, 0),
-                             Ogre::Vector3(cos(yaw - hfov / 2.0) * dist, sin(yaw - hfov / 2.0) * dist, tan(+vfov / 2.0) * dist),
+      Ogre::Vector3 pts[] = {Ogre::Vector3(0, 0, 0), Ogre::Vector3(cos(yaw - hfov / 2.0) * dist, sin(yaw - hfov / 2.0) * dist, tan(+vfov / 2.0) * dist),
                              Ogre::Vector3(cos(yaw - hfov / 2.0) * dist, sin(yaw - hfov / 2.0) * dist, tan(-vfov / 2.0) * dist),
                              Ogre::Vector3(cos(yaw + hfov / 2.0) * dist, sin(yaw + hfov / 2.0) * dist, tan(-vfov / 2.0) * dist),
                              Ogre::Vector3(cos(yaw + hfov / 2.0) * dist, sin(yaw + hfov / 2.0) * dist, tan(+vfov / 2.0) * dist)};
@@ -222,7 +221,8 @@ namespace fog_rviz_plugins
     //}
 
     /* draw_lidar3d() method //{ */
-    std::shared_ptr<rviz_rendering::Object> Visual::draw_lidar3d(const double dist, const double vfov, const unsigned sector_it, const unsigned n_horizontal_sectors)
+    std::shared_ptr<rviz_rendering::Object> Visual::draw_lidar3d(const double dist, const double vfov, const unsigned sector_it,
+                                                                 const unsigned n_horizontal_sectors)
     {
       /* // so far, this method can only cope with horizontal measurements - relay the rest as 1D lidar */
       const double hfov = 2.0 * M_PI / n_horizontal_sectors;
@@ -306,8 +306,8 @@ namespace fog_rviz_plugins
     //}
 
     /* draw_sensor() method //{ */
-    std::shared_ptr<rviz_rendering::Object> Visual::draw_sensor(const double dist, const double vfov, const double hfov, const int sensor_type, const unsigned sector_it,
-                                                      const unsigned n_horizontal_sectors)
+    std::shared_ptr<rviz_rendering::Object> Visual::draw_sensor(const double dist, const double vfov, const double hfov, const int sensor_type,
+                                                                const unsigned sector_it, const unsigned n_horizontal_sectors)
     {
       std::shared_ptr<rviz_rendering::Object> ret = nullptr;
       switch (sensor_type)
@@ -345,19 +345,19 @@ namespace fog_rviz_plugins
     {
       if (msg == nullptr)
         return;
-    
+
       const auto n_hor_sectors = msg->n_horizontal_sectors;
       const double hfov = 2.0 * M_PI / n_hor_sectors;
       const double vfov = msg->sectors_vertical_fov;
       m_sectors.clear();
       m_sectors.reserve(n_hor_sectors + 2);
-    
+
       for (unsigned sector_it = 0; sector_it < n_hor_sectors + 2; sector_it++)
       {
         constexpr double max_len = 666.0;
         double cur_len = msg->sectors.at(sector_it);
         std::shared_ptr<rviz_rendering::Object> object_ptr = nullptr;
-    
+
         if (cur_len == fog_msgs::msg::ObstacleSectors::OBSTACLE_NOT_DETECTED)
         {
           if (m_show_undetected)
@@ -365,7 +365,7 @@ namespace fog_rviz_plugins
           else
             continue;
         }
-    
+
         if (cur_len == msg_t::OBSTACLE_NO_DATA)
         {
           if (m_show_no_data)
@@ -378,30 +378,28 @@ namespace fog_rviz_plugins
           switch (display_mode)
           {
             default:
-            case display_mode_t::WHOLE_SECTORS:
-            {
+            case display_mode_t::WHOLE_SECTORS: {
               object_ptr = draw_sector(cur_len, vfov, hfov, sector_it, n_hor_sectors);
               break;
             }
-            case display_mode_t::SENSOR_TYPES:
-            {
+            case display_mode_t::SENSOR_TYPES: {
               const auto cur_sensor = msg->sector_sensors.at(sector_it);
               object_ptr = draw_sensor(cur_len, vfov, hfov, cur_sensor, sector_it, n_hor_sectors);
               break;
             }
           }
         }
-    
+
         if (object_ptr != nullptr)
         {
-    
+
           if (sector_it < n_hor_sectors && m_collision_colorize && cur_len >= 0.0 && cur_len <= m_collision_horizontal_threshold)
             object_ptr->setColor(m_collision_color_r, m_collision_color_g, m_collision_color_b, m_collision_color_a);
           else if (sector_it >= n_hor_sectors && m_collision_colorize && cur_len >= 0.0 && cur_len <= m_collision_vertical_threshold)
             object_ptr->setColor(m_collision_color_r, m_collision_color_g, m_collision_color_b, m_collision_color_a);
           else
             object_ptr->setColor(m_color_r, m_color_g, m_color_b, m_color_a);
-    
+
           m_sectors.push_back(object_ptr);
         }
       }

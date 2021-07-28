@@ -21,7 +21,7 @@
 #include <rviz_common/properties/float_property.hpp>
 #include <rviz_common/properties/int_property.hpp>
 
-#include "rviz_rendering/logging.hpp"
+#include <rviz_rendering/logging.hpp>
 
 #include <bumper/visual.h>
 #include <bumper/display.h>
@@ -39,15 +39,17 @@ namespace fog_rviz_plugins
 
     Display::Display()
     {
-      color_property_ = new rviz_common::properties::ColorProperty("Color", QColor(204, 51, 204), "Color to draw the shapes.", this, SLOT(updateColorAndAlpha()));
+      color_property_ =
+          new rviz_common::properties::ColorProperty("Color", QColor(204, 51, 204), "Color to draw the shapes.", this, SLOT(updateColorAndAlpha()));
 
-      alpha_property_ = new rviz_common::properties::FloatProperty("Alpha", 0.1, "0 is fully transparent, 1.0 is fully opaque.", this, SLOT(updateColorAndAlpha()));
+      alpha_property_ =
+          new rviz_common::properties::FloatProperty("Alpha", 0.1, "0 is fully transparent, 1.0 is fully opaque.", this, SLOT(updateColorAndAlpha()));
       alpha_property_->setMin(0.0);
       alpha_property_->setMax(1.0);
 
-      collision_colorize_property_ =
-          new rviz_common::properties::BoolProperty("Colorize collisions", true, "If true, sectors with obstacles closer than Collision threshold will be colored differently.",
-                                 this, SLOT(updateCollisions()));
+      collision_colorize_property_ = new rviz_common::properties::BoolProperty(
+          "Colorize collisions", true, "If true, sectors with obstacles closer than Collision threshold will be colored differently.", this,
+          SLOT(updateCollisions()));
 
       horizontal_collision_threshold_property_ = new rviz_common::properties::FloatProperty(
           "Horizontal collision threshold", 1.0, "If an obstacle is closer than this threshold, the respective sector is colored differently.", this,
@@ -57,24 +59,26 @@ namespace fog_rviz_plugins
           "Vertical collision threshold", 1.0, "If an obstacle is closer than this threshold, the respective sector is colored differently.", this,
           SLOT(updateCollisions()));
 
-      collision_color_property_ =
-          new rviz_common::properties::ColorProperty("Collision color", QColor(255, 0, 0), "Color to draw sectors with collision.", this, SLOT(updateCollisions()));
+      collision_color_property_ = new rviz_common::properties::ColorProperty("Collision color", QColor(255, 0, 0), "Color to draw sectors with collision.",
+                                                                             this, SLOT(updateCollisions()));
 
       collision_alpha_property_ =
           new rviz_common::properties::FloatProperty("Collision alpha", 0.5, "0 is fully transparent, 1.0 is fully opaque.", this, SLOT(updateCollisions()));
 
-      history_length_property_ = new rviz_common::properties::IntProperty("History Length", 1, "Number of prior measurements to display.", this, SLOT(updateHistoryLength()));
+      history_length_property_ =
+          new rviz_common::properties::IntProperty("History Length", 1, "Number of prior measurements to display.", this, SLOT(updateHistoryLength()));
       history_length_property_->setMin(1);
       history_length_property_->setMax(100000);
 
-      display_mode_property_ = new rviz_common::properties::EnumProperty("Display mode", "sensor types", "How to display the bumper message.", this, SLOT(updateDisplayMode()));
+      display_mode_property_ =
+          new rviz_common::properties::EnumProperty("Display mode", "sensor types", "How to display the bumper message.", this, SLOT(updateDisplayMode()));
       display_mode_property_->addOptionStd("whole sectors", Visual::display_mode_t::WHOLE_SECTORS);
       display_mode_property_->addOptionStd("sensor types", Visual::display_mode_t::SENSOR_TYPES);
-      show_undetected_property_ = new rviz_common::properties::BoolProperty("Show undetected obstacles", true,
-                                                         "Whether to show sectors, corresponding to no obstacle detection (might clutter the draw space).",
-                                                         this, SLOT(updateShowUndetected()));
-      show_no_data_property_ = new rviz_common::properties::BoolProperty("Show sectors with no data", false, "Whether to show sectors, for which no sensory data is available.",
-                                                      this, SLOT(updateShowUndetected()));
+      show_undetected_property_ = new rviz_common::properties::BoolProperty(
+          "Show undetected obstacles", true, "Whether to show sectors, corresponding to no obstacle detection (might clutter the draw space).", this,
+          SLOT(updateShowUndetected()));
+      show_no_data_property_ = new rviz_common::properties::BoolProperty(
+          "Show sectors with no data", false, "Whether to show sectors, for which no sensory data is available.", this, SLOT(updateShowUndetected()));
     }
 
     //}
@@ -184,8 +188,9 @@ namespace fog_rviz_plugins
       {
 
         std::stringstream log_msg;
-        log_msg << "[Visual]: n_horizontal_sectors (" << msg->n_horizontal_sectors << ") is not equal to length of sectors (" << msg->sectors.size() << ")-2 in the ObstacleSectors message!";
-        RVIZ_RENDERING_LOG_DEBUG(log_msg.str());        
+        log_msg << "[Visual]: n_horizontal_sectors (" << msg->n_horizontal_sectors << ") is not equal to length of sectors (" << msg->sectors.size()
+                << ")-2 in the ObstacleSectors message!";
+        RVIZ_RENDERING_LOG_DEBUG(log_msg.str());
         return;
       }
       for (const auto cur_len : msg->sectors)
@@ -194,7 +199,7 @@ namespace fog_rviz_plugins
         {
           std::stringstream log_msg;
           log_msg << "[Visual]: Invalid obstacle distance encountered in fog_msgs::msg::ObstacleSectors message: " << cur_len << ", skipping message";
-          RVIZ_RENDERING_LOG_DEBUG(log_msg.str());        
+          RVIZ_RENDERING_LOG_DEBUG(log_msg.str());
           return;
         }
       }
@@ -208,7 +213,7 @@ namespace fog_rviz_plugins
       {
         std::stringstream log_msg;
         log_msg << "[Visual]: Error transforming from frame \'" << msg->header.frame_id.c_str() << "\' to frame \'" << qPrintable(fixed_frame_);
-        RVIZ_RENDERING_LOG_DEBUG(log_msg.str());        
+        RVIZ_RENDERING_LOG_DEBUG(log_msg.str());
         return;
       }
 

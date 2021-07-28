@@ -17,13 +17,14 @@ namespace Ogre
 
 namespace rviz_common
 {
-  namespace properties{
+  namespace properties
+  {
     class ColorProperty;
     class EnumProperty;
     class FloatProperty;
     class IntProperty;
     class BoolProperty;
-  }
+  }  // namespace properties
 }  // namespace rviz_common
 
 // All the source in this plugin is in its own namespace.  This is not

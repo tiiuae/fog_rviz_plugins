@@ -7,7 +7,8 @@
 
 namespace Ogre
 {
-  template <int dims, typename T> class Vector;
+  template <int dims, typename T>
+  class Vector;
   class Quaternion;
 }  // namespace Ogre
 
@@ -69,10 +70,10 @@ namespace fog_rviz_plugins
     private:
       void draw_message(const msg_t::ConstSharedPtr& msg, display_mode_t display_mode);
       std::shared_ptr<rviz_rendering::Object> draw_no_data(const unsigned sector_it, const unsigned n_horizontal_sectors);
-      std::shared_ptr<rviz_rendering::Object> draw_sensor(const double dist, const double vfov, const double hfov, const int sensor_type, const unsigned sector_it,
-                                                const unsigned n_horizontal_sectors);
+      std::shared_ptr<rviz_rendering::Object> draw_sensor(const double dist, const double vfov, const double hfov, const int sensor_type,
+                                                          const unsigned sector_it, const unsigned n_horizontal_sectors);
       std::shared_ptr<rviz_rendering::Object> draw_sector(const double dist, const double vfov, const double hfov, const unsigned sector_it,
-                                                const unsigned n_horizontal_sectors);
+                                                          const unsigned n_horizontal_sectors);
       std::shared_ptr<rviz_rendering::Object> draw_horizontal_sector(const double dist, const double vfov, const double hfov, const double yaw);
       std::shared_ptr<rviz_rendering::Object> draw_topdown_sector(const double dist, const double vfov, const unsigned n_horizontal_sectors);
       std::shared_ptr<rviz_rendering::Object> draw_lidar1d(const double dist, const unsigned sector_it, const unsigned n_horizontal_sectors);
