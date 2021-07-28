@@ -2,19 +2,15 @@ cmake_minimum_required(VERSION 3.5)
 project(fog_rviz_plugins)
 
 find_package(ament_cmake REQUIRED)
-find_package(rviz_common REQUIRED)
-find_package(rviz_rendering REQUIRED)
 find_package(rviz_ogre_vendor REQUIRED)
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Core)
+find_package(rviz_common REQUIRED)
+find_package(rviz_rendering REQUIRED)
+
+find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
 find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(tf2 REQUIRED)
-find_package(tf2_geometry_msgs REQUIRED)
-find_package(tf2_ros REQUIRED)
-find_package(urdf REQUIRED)
-find_package(visualization_msgs REQUIRED)
 
 find_package(fog_msgs REQUIRED)
 
@@ -59,11 +55,6 @@ ament_target_dependencies(BumperRviz
   rclcpp
   rviz_common
   rviz_rendering
-  tf2
-  tf2_geometry_msgs
-  tf2_ros
-  urdf
-  visualization_msgs
   )
 
 target_link_libraries(BumperRviz 
@@ -77,6 +68,15 @@ target_link_libraries(BumperRviz
 ## --------------------------------------------------------------
 
 install(
+  TARGETS BumperRviz
+  EXPORT BumperRviz
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
+install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
   )
@@ -87,8 +87,13 @@ install(
   )
 
 install(
-  DIRECTORY include/
+  DIRECTORY include
   DESTINATION include
+)
+
+install(
+  DIRECTORY icons
+  DESTINATION share/${PROJECT_NAME}
 )
 
 ament_package()
