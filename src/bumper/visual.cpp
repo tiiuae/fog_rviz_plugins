@@ -14,7 +14,8 @@
 #include <rviz_rendering/objects/shape.hpp>
 #include <rviz_rendering/objects/object.hpp>
 
-#include <bumper/visual.h>
+#include "rviz_rendering/objects/mesh_shape.hpp"
+#include "bumper/visual.hpp"
 
 namespace fog_rviz_plugins
 {
@@ -80,11 +81,12 @@ namespace fog_rviz_plugins
       constexpr float arc_a_start = M_PI;
       constexpr float arc_a_end = arc_a_start + 3.0 / 2.0 * M_PI;
       ret->addPoint(cove({0.0, 0.0, 0.0}, v, u));
-      ret->addPoint(cove({cos(yaw) * base_len, sin(yaw) * base_len, 0.0}, v, u));
+      ret->addPoint(cove({Ogre::Real(cos(yaw) * base_len), Ogre::Real(sin(yaw) * base_len), 0.0}, v, u));
       for (int it = 0; it < arc_pts; it++)
       {
         const float angle = yaw + arc_a_start + (arc_a_end - arc_a_start) / arc_pts * it;
-        ret->addPoint(cove({cos(yaw) * (base_len + arc_r) + cos(angle) * arc_r, sin(yaw) * (base_len + arc_r) + sin(angle) * arc_r, 0.0}, v, u));
+        ret->addPoint(
+            cove({Ogre::Real(cos(yaw) * (base_len + arc_r) + cos(angle) * arc_r), Ogre::Real(sin(yaw) * (base_len + arc_r) + sin(angle) * arc_r), 0.0}, v, u));
       }
       return ret;
     }

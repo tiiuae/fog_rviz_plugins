@@ -13,8 +13,6 @@
 #include <OgreSceneNode.h>
 #endif
 
-#include <tf2_ros/transform_listener.h>
-
 #include <rviz_common/visualization_manager.hpp>
 #include <rviz_common/properties/color_property.hpp>
 #include <rviz_common/properties/enum_property.hpp>
@@ -23,9 +21,10 @@
 
 #include <rviz_rendering/logging.hpp>
 
-#include <bumper/visual.h>
-#include <bumper/display.h>
 #include <boost/make_shared.hpp>
+
+#include "bumper/visual.hpp"
+#include "bumper/display.hpp"
 
 //}
 

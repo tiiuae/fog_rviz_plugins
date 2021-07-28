@@ -46,10 +46,12 @@ include_directories(
 ## --------------------------------------------------------------
 
 add_library(BumperRviz SHARED
-  include/bumper/display.h
-  include/bumper/visual.h
+  include/bumper/display.hpp
   src/bumper/display.cpp
+  include/bumper/visual.hpp
   src/bumper/visual.cpp
+  include/rviz_rendering/objects/mesh_shape.hpp
+  src/rviz_rendering/objects/mesh_shape.cpp
   )
 
 ament_target_dependencies(BumperRviz
