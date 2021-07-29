@@ -160,14 +160,15 @@ namespace fog_rviz_plugins
       std::shared_ptr<rviz_rendering::MeshShape> mesh_ptr = std::make_shared<rviz_rendering::MeshShape>(scene_manager_, frame_node_);
 
       const double hfov = 2.0 * M_PI / n_horizontal_sectors;
-      Ogre::Vector3 pts[n_horizontal_sectors];
+      std::vector<Ogre::Vector3> pts;
+      pts.reserve(n_horizontal_sectors);
       const Ogre::Vector3 start_pt(0, 0, 0);
       const Ogre::Vector3 end_pt(0, 0, dist);
       for (unsigned sector_it = 0; sector_it < n_horizontal_sectors; sector_it++)
       {
         const double cur_yaw = hfov * sector_it;
         const Ogre::Vector3 cur_pt(cos(cur_yaw - hfov / 2.0) * dist / tan(vfov / 2.0), sin(cur_yaw - hfov / 2.0) * dist / tan(vfov / 2.0), dist);
-        pts[sector_it] = cur_pt;
+        pts.push_back(cur_pt);
       }
 
       mesh_ptr->beginTriangles();

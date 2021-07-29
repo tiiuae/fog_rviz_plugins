@@ -1,6 +1,6 @@
-<library path="lib/libBumperRviz">
+<library path="fog_rviz_plugins">
   <class name="fog_rviz_plugins/Bumper" type="fog_rviz_plugins::bumper::Display" base_class_type="rviz_common::Display">
     <description>Display tool for visualizing fog_msgs/ObstacleSectors messages.</description>
-    <message_type>fog_msgs/ObstacleSectors</message_type>
+    <message_type>fog_msgs/msg/ObstacleSectors</message_type>
   </class>
 </library>
