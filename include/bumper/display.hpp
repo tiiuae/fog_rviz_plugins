@@ -3,12 +3,12 @@
 #ifndef BUMPER_DISPLAY_H
 #define BUMPER_DISPLAY_H
 
-#ifndef Q_MOC_RUN
 #include <boost/circular_buffer.hpp>
 
 #include <rviz_common/message_filter_display.hpp>
 #include <fog_msgs/msg/obstacle_sectors.hpp>
-#endif
+#include "bumper/visual.hpp"
+#include <memory>
 
 namespace Ogre
 {
@@ -35,8 +35,6 @@ namespace fog_rviz_plugins
   namespace bumper
   {
 
-    class Visual;
-
     class Display : public rviz_common::MessageFilterDisplay<fog_msgs::msg::ObstacleSectors>
     {
       Q_OBJECT
@@ -44,7 +42,7 @@ namespace fog_rviz_plugins
       // Constructor.  pluginlib::ClassLoader creates instances by calling
       // the default constructor, so make sure you have one.
       Display();
-      virtual ~Display();
+      virtual ~Display() = default;
 
       // Overrides of protected virtual functions from Display.  As much
       // as possible, when Displays are not enabled, they should not be
@@ -52,10 +50,10 @@ namespace fog_rviz_plugins
       // 3D view.  These functions are where these connections are made
       // and broken.
     protected:
-      virtual void onInitialize();
+      virtual void onInitialize() override;
 
       // A helper to clear this display back to the initial state.
-      virtual void reset();
+      virtual void reset() override;
 
       // These Qt slots get connected to signals indicating changes in the user-editable properties.
     private Q_SLOTS:
@@ -68,11 +66,11 @@ namespace fog_rviz_plugins
 
       // Function to handle an incoming ROS message.
     private:
-      void processMessage(fog_msgs::msg::ObstacleSectors::ConstSharedPtr msg);
+      virtual void processMessage(fog_msgs::msg::ObstacleSectors::ConstSharedPtr msg) override;
 
       // Storage for the list of visuals.  It is a circular buffer where
       // data gets popped from the front (oldest) and pushed to the back (newest)
-      boost::circular_buffer<boost::shared_ptr<Visual>> visuals_;
+      boost::circular_buffer<std::shared_ptr<Visual>> visuals_;
 
       // User-editable property variables.
       rviz_common::properties::ColorProperty* color_property_;

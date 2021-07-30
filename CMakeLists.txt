@@ -20,21 +20,36 @@ endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
-include_directories(
-  include
-  ${Qt5Widgets_INCLUDE_DIRS}
-  ${rviz_ogre_vendor_INCLUDE_DIRS}
-  )
-
 ## --------------------------------------------------------------
 ## |                           BUMPER                           |
 ## --------------------------------------------------------------
 
-add_library(fog_rviz_plugins SHARED
+set(fog_rviz_plugins_headers_to_moc
+  include/bumper/display.hpp
+  )
+
+foreach(header "${fog_rviz_plugins_headers_to_moc}")
+  qt5_wrap_cpp(fog_rviz_plugins_moc_files "${header}")
+endforeach()
+
+set(fog_rviz_plugins_source_files
   src/bumper/display.cpp
+  )
+
+add_library(fog_rviz_plugins SHARED
+  ${fog_rviz_plugins_moc_files}
+  ${fog_rviz_plugins_source_files}
+  include/bumper/visual.hpp
+  include/rviz_rendering/objects/mesh_shape.hpp
   src/bumper/visual.cpp
   src/rviz_rendering/objects/mesh_shape.cpp
   )
+
+target_include_directories(fog_rviz_plugins PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+  ${Qt5Widgets_INCLUDE_DIRS}
+)
 
 target_link_libraries(fog_rviz_plugins PUBLIC
   rviz_ogre_vendor::OgreMain
@@ -50,12 +65,15 @@ target_compile_definitions(fog_rviz_plugins PUBLIC "PLUGINLIB__DISABLE_BOOST_FUN
 
 pluginlib_export_plugin_description_file(rviz_common plugins_description.xml)
 
+ament_export_include_directories(include)
+ament_export_targets(fog_rviz_plugins HAS_LIBRARY_TARGET)
 ament_target_dependencies(fog_rviz_plugins
   PUBLIC
   fog_msgs
   rclcpp
   rviz_common
   rviz_rendering
+  rviz_ogre_vendor
   )
 
 ## --------------------------------------------------------------

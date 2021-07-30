@@ -3,7 +3,6 @@
 /* includes //{ */
 #include <rclcpp/rclcpp.hpp>
 
-#ifndef Q_MOC_RUN
 #include <memory>
 #include <set>
 #include <string>
@@ -11,7 +10,6 @@
 
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
-#endif
 
 #include <rviz_common/visualization_manager.hpp>
 #include <rviz_common/properties/color_property.hpp>
@@ -97,10 +95,6 @@ namespace fog_rviz_plugins
       MFDClass::onInitialize();
       updateHistoryLength();
       updateCollisions();
-    }
-
-    Display::~Display()
-    {
     }
 
     // Clear the visuals by deleting their objects.
@@ -218,13 +212,13 @@ namespace fog_rviz_plugins
 
       // We are keeping a circular buffer of visual pointers.  This gets
       // the next one, or creates and stores it if the buffer is not full
-      boost::shared_ptr<Visual> visual;
+      std::shared_ptr<Visual> visual;
       if (visuals_.full())
       {
         visual = visuals_.front();
       } else
       {
-        visual = boost::make_shared<Visual>(context_->getSceneManager(), scene_node_);
+        visual = std::make_shared<Visual>(context_->getSceneManager(), scene_node_);
       }
 
       float alpha = alpha_property_->getFloat();
