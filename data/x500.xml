@@ -78,7 +78,6 @@
   </joint>
 
   <link name="[REPLACEME]uav_name[/REPLACEME]/arms">
-    <!-- ARMS -->
     <!-- arm1 -->
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0e-2" />
@@ -95,6 +94,14 @@
       </geometry>
       <material name="Gray" />
     </visual>
+  </link>
+
+  <joint name="joint_arms" type="fixed">
+    <parent link="[REPLACEME]uav_name[/REPLACEME]" />
+    <child link="[REPLACEME]uav_name[/REPLACEME]/arms" />
+  </joint>
+
+  <link name="[REPLACEME]uav_name[/REPLACEME]/arms_red">
     <!-- arm3 -->
     <visual>
       <origin xyz="0 0 0" rpy="0 0 317e-2" />
@@ -113,8 +120,8 @@
     </visual>
   </link>
 
-  <joint name="joint_arms" type="fixed">
+  <joint name="joint_arms_red" type="fixed">
     <parent link="[REPLACEME]uav_name[/REPLACEME]" />
-    <child link="[REPLACEME]uav_name[/REPLACEME]/arms" />
+    <child link="[REPLACEME]uav_name[/REPLACEME]/arms_red" />
   </joint>
 </robot>
