@@ -121,9 +121,12 @@ void MeshShape::endTriangles() {
 
 void MeshShape::clear() {
   if (entity_) {
-    entity_->detachFromParent();
-    Ogre::MeshManager::getSingleton().remove(entity_->getMesh()->getName());
-    scene_manager_->destroyEntity(entity_);
+    try{
+      entity_->detachFromParent();
+      Ogre::MeshManager::getSingleton().remove(entity_->getMesh()->getName());
+      scene_manager_->destroyEntity(entity_);
+    }catch(...){
+    }
     entity_ = nullptr;
   }
   manual_object_->clear();
