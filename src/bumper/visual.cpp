@@ -252,6 +252,7 @@ namespace fog_rviz_plugins
         pts2d[seg_it][1] = yaw_sin * x + yaw_cos * y;
       }
 
+      mesh_ptr->estimateVertexCount(n_segments * 12 + 6);
       mesh_ptr->beginTriangles();
 
       for (unsigned seg_it = 0; seg_it < n_segments - 1; seg_it++)

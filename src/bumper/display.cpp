@@ -86,13 +86,13 @@ namespace fog_rviz_plugins
     // call our immediate super-class's onInitialize() function, since it
     // does important stuff setting up the message filter.
     //
-    //  Note that "MFDClass" is a typedef of
-    // ``MessageFilterDisplay<message type>``, to save typing that long
+    //  Note that "RTDClass" is a typedef of
+    // ``RosTopicDisplay<MessageType>``, to save typing that long
     // templated class name every time you need to refer to the
     // superclass.
     void Display::onInitialize()
     {
-      MFDClass::onInitialize();
+      RTDClass::onInitialize();
       updateHistoryLength();
       updateCollisions();
     }
@@ -100,7 +100,7 @@ namespace fog_rviz_plugins
     // Clear the visuals by deleting their objects.
     void Display::reset()
     {
-      MFDClass::reset();
+      RTDClass::reset();
       visuals_.clear();
     }
 

@@ -5,7 +5,7 @@
 
 #include <boost/circular_buffer.hpp>
 
-#include <rviz_common/message_filter_display.hpp>
+#include <rviz_common/ros_topic_display.hpp>
 #include <fog_msgs/msg/obstacle_sectors.hpp>
 #include "bumper/visual.hpp"
 #include <memory>
@@ -35,7 +35,7 @@ namespace fog_rviz_plugins
   namespace bumper
   {
 
-    class Display : public rviz_common::MessageFilterDisplay<fog_msgs::msg::ObstacleSectors>
+    class Display : public  rviz_common::RosTopicDisplay<fog_msgs::msg::ObstacleSectors>
     {
       Q_OBJECT
     public:
