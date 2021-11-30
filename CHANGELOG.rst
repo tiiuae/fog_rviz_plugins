@@ -2,7 +2,7 @@
 Changelog for package fog_rviz_plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
+0.0.1
 -----------
 * changed to RosTopicDisplay due to bug in MessageFilterDisplay PR`#620 <https://github.com/tiiuae/fog_rviz_plugins/issues/620>`_
 * add missing dependency on fog_msgs
