@@ -358,7 +358,7 @@ namespace fog_rviz_plugins
 
       for (unsigned sector_it = 0; sector_it < n_hor_sectors + 2; sector_it++)
       {
-        constexpr double max_len = 666.0;
+        constexpr double max_len = 10;
         double cur_len = msg->sectors.at(sector_it);
         std::shared_ptr<rviz_rendering::Object> object_ptr = nullptr;
 
